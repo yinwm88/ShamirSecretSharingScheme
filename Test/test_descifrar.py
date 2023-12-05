@@ -1,11 +1,11 @@
 import unittest
-from algoritmo_de_lagrange import get_k
+from descifrar.algoritmo_de_lagrange import get_k
 
 
 primo = 208351617316091241234326746312124448251235562226470491514186331217050270460481
 
-# lista obtenida al leer un .frg donde las evaluaciones se obtuvieron de un polinomio
-# con k=1000 como temrino independiente
+# La siguiente lista fue obtenida al leer un .frg donde las evaluaciones se obtuvieron
+# de un polinomio con k=1000 como termino independiente
 listaEval = [(1, 1561), (2, 2162), (3, 2803), (4, 3484), (5, 4205)]
 
 
@@ -15,10 +15,12 @@ class Testdescifra(unittest.TestCase):
         el texto original, apartir del archivo con extensión .aes y del 
         archivo .frg.
         
-        Para ello, se usa el algoritmo de Lagrange para obtener k del archivo .frg,
-        y con k y el metodo aes_inverso descifrar el archivo .aes , generando 
-        el archivo .txt con el contentenido original y el cual debera 
-        llamarse igual al original 
+        Para ello, se usa el algoritmo de Lagrange para obtener k (la clave 
+        con la que se cifro el texto) de  las evaluacioines que estan en el 
+        archivo .frg; y con k y el metodo aes_inverso, descifrar el archivo 
+        .aes, generando el archivo .txt con el contentenido original y el nombre 
+        original.
+         
     '''
     
     def test_petenece_al_campo_finito(self):
@@ -31,7 +33,7 @@ class Testdescifra(unittest.TestCase):
    
     def test_lagrange(self):
         '''
-            Verificar que la k obtenida con lagrange tenga el valor con el que e derivo y cifro el .txt
+            Verificar que la k obtenida con lagrange coincide con el termino independeinete del polinomio del cual se obtuvo listaEval.
         ''' 
         k = get_k(listaEval) #en el metodo get_k se aplica el algoritmo de lagrange
         self.assertEqual(k, 1000, f"La k como termino independiente y la obtenida con el algoritmo de lagrange no coinciden.")

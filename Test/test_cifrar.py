@@ -1,29 +1,35 @@
 import unittest
 import os
 import random
-from cifrar import cifrar
-from algoritmo_horner import algoritmo_horner
-from obtener_coeficientes_aleatorios import obtener_coeficientes_aleatorios
+from cifrar import Cifrar
+from cifrar.algoritmo_horner import algoritmo_horner
+from cifrar.obtener_coeficientes_aleatorios import obtener_coeficientes_aleatorios
 
 def contar_lineas(nombre_eval):
     with open(nombre_eval, 'r') as archivo:
         lineas = [linea.strip() for linea in archivo if linea.strip()]
     return len(lineas)
 
+# numero aleatorio que representa los integrantes totales de una junta
+n = random.randint(3,1000) # 2<n
+# numero aleatorio que representa los integrantes minimos en la junta para descifrar el texto
+k = random.randint(2,n) # 1<t<=n
+
 class TestCifrar(unittest.TestCase):
     ''' 
         La funcion cifrar tiene la funcion principal de generar dos archivo, en 
         uno se contendran las n evaluaciones y en el otro el archivo cifrado con AES
-        cada archivo debe terminar ya sea en .aes o en .frg.
+        , cada archivo debe terminar ya sea en .aes o en .frg.
         
         Ademas el archivo .frg debera contener n renglones, ya que n es el numero total de 
         integrantes de la junta.
         
         Ambos archivos deberan tener el mismo nombre y debera coincidir con el nombre elegido
-        por el uuario para llamar al archivo con la n evaluaciones.
+        por el usuario para llamar al archivo con la n evaluaciones.
            
     '''
-    cifrar("secreto", 5, 3, 'Textoclaro/texto_claro.txt')
+    cifrador = Cifrar()
+    cifrador.cifrar("secreto", n, k, 'Textoclaro/texto_claro.txt')
     # esto generara dos archivos, uno con .frg y el otro .aes cada uno en sus respectivas carpetas
 
     def test_names(self):
@@ -41,7 +47,7 @@ class TestCifrar(unittest.TestCase):
         ruta_completa1 = os.path.join(ruta_carpeta_cripto, nombre_aes)
         ruta_completa2 = os.path.join(ruta_carpeta_eval, nombre_eval)
     
-        self.assertTrue(os.path.exists(ruta_completa1) & os.path.exists(ruta_completa2), f"Los archivos {nombre_aes} y {nombre_eval} deberían existir en {ruta_carpeta}.")
+        self.assertTrue(os.path.exists(ruta_completa1) & os.path.exists(ruta_completa2), f"{nombre_aes}  debería existir en {ruta_carpeta_cripto} y {nombre_eval} debería existir en {ruta_carpeta_eval}.")
     
     def test_rows(self):
         '''
@@ -50,7 +56,7 @@ class TestCifrar(unittest.TestCase):
         '''    
         ruta_eval = 'Eval/secreto.frg'
         resultado = contar_lineas(ruta_eval)
-        self.assertEqual(resultado, 5, f"El número de evaluaciones totales debería ser 5." )
+        self.assertEqual(resultado, n, f"El número de evaluaciones no coincide con el total de integrantes de la junta." )
 
     '''
         Además también probaremos el algoritmo de Horner para asegurarnos de que efectivamente 
@@ -61,16 +67,16 @@ class TestCifrar(unittest.TestCase):
     def test_horner(self):
         '''
             Prueba unitaria que verifica que el algoritmo de Horner se haya implementado de manera 
-            correcta. Ademas de que k ea el termino independeiente del polinomio.
+            correcta. 
         ''' 
-        n = 4
-        t = 3
+        nt = 4
+        tm = 3
         k = 3
         coeficientes = []
         
         count = 0
-        while t > 1:
-            t = t - 1
+        while tm > 1:
+            tm = tm - 1
             count = count+2 
             coeficientes.append(count)
         coeficientes.append(k) 
@@ -78,11 +84,11 @@ class TestCifrar(unittest.TestCase):
                  
         x = 0
         listaEval=[]
-        while n > 0:
+        while nt > 0:
                 x = x+1 #x=1, x=2, x=3, x=4
                 y = algoritmo_horner(x, coeficientes)
                 listaEval.append((x, y))
-                n = n-1  
+                nt = nt-1  
 
         self.assertEqual(listaEval, [(1, 9),(2, 19),(3, 33),(4, 51)], f"Algo anda mas con el algoritmo de Horner.") 
     
