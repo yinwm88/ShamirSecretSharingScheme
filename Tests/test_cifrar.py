@@ -1,9 +1,9 @@
 import unittest
 import os
 import random
-from cifrar import Cifrar
-from cifrar.algoritmo_horner import algoritmo_horner
-from cifrar.obtener_coeficientes_aleatorios import obtener_coeficientes_aleatorios
+from Esquema.cifrar import Cifrar
+from Esquema.cifrar.algoritmo_horner import algoritmo_horner
+from Esquema.cifrar.obtener_coeficientes_aleatorios import obtener_coeficientes_aleatorios
 
 def contar_lineas(nombre_eval):
     with open(nombre_eval, 'r') as archivo:
@@ -103,3 +103,4 @@ class TestCifrar(unittest.TestCase):
     
     if __name__ == '__main__':
         unittest.main()
+        
