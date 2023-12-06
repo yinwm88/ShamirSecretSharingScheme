@@ -1,45 +1,47 @@
 import os
 from Esquema.cifrar.cifrar import Cifrar
 from Esquema.descifrar.descifrar import Descifrar
+import json
 
-
-nombre_original = ''
-
-def set_nombre_original(nombre):
-      global nombre_original
-      nombre_original = nombre    
-  
-def get_nombre_original():
-      return nombre_original
-
-# revisa los argumentos para cifrar
 def checar_argumento_cifrar(argumentos):
-      length = len(argumentos)
-      if length == 5: 
-            t = argumentos[3]
-            n = argumentos[2]
-            if n >= t :
-                  return True
+    if len(argumentos) == 5:
+          n = int(argumentos[2])
+          if n>2:
+            t = int(argumentos[3])
+            if t <= n:
+                   return True
             else:
-                  print(f"total:{n}")
-                  print(f"minimo:{t}")
-                  print("El minimo de personas para decifrar el texto excede al maximo de integrantes de la junta.")
-                  print( f"{n}>={t}" )
-                  return False
-      else:
-            print("No se cuenta con lo argumentos necesarios para cifrar.")
-            return False
-                              
-                 
-   #checar existecncia de esos archivos en sus respectivas carpetas, el eval y el criptograma            
+                    print("El mínimo de personas para descifrar el texto excede al número de integrantes de la junta.")
+          else:
+                print("Se requiere que la junta tenga minimo 3 integrantes.")
+    else:
+        print("No se cuentan con los argumentos necesarios para cifrar.") 
+    
+    return False
+                   
+            
+def existen_archivos(eval_file, aes_file):
+    directorio_script = os.path.dirname(os.path.abspath(__file__))
+      
+    ruta_completa_eval = os.path.join(directorio_script, "Eval", eval_file)
+    ruta_completa_aes = os.path.join(directorio_script, "Criptograma", aes_file)
+
+    existe_eval = os.path.isfile(ruta_completa_eval)
+    existe_aes = os.path.isfile(ruta_completa_aes)
+    return existe_eval and existe_aes 
 
 def checar_argumento_descifrar(argumentos):
-      length = len(argumentos)
-      if length == 3: 
-            return True
+      if len(argumentos) == 3: 
+            eval_file = archivo_con_extension(argumentos[1],'.frg')
+            aes_file = archivo_con_extension(argumentos[2], '.aes')
+            if existen_archivos(eval_file, aes_file):
+                  return True
+            else:
+                  print("Verifique que ambos archivos existan en las carpetas designadas para cada uno. ")
       else:
             print("No se cuenta con lo argumentos necesarios para descifrar.")
-            return False
+      
+      return False
              
 
 def archivo_con_extension(archivo, ext):
@@ -71,7 +73,9 @@ def llamar_modalidad(modalidad):
                   nombre_texto_claro = argumentos[4] 
                   
                   nombre = os.path.splitext(nombre_texto_claro)[0]
-                  set_nombre_original(nombre)
+                  with open("configuracion.json", "w") as config_file:
+                        json.dump({"nombre_original": nombre}, config_file)
+
                   texto_claro = archivo_con_extension(nombre_texto_claro, ".txt")
                   
                   cifrador = Cifrar()    
@@ -89,10 +93,16 @@ def llamar_modalidad(modalidad):
                  
                   evaluaciones = archivo_con_extension(nombre_eval, ".frg")
                   criptograma = archivo_con_extension(nombre_aes, ".aes")
-                  nombre_original = get_nombre_original() 
+            
+                  with open("configuracion.json", "r") as config_file:
+                        configuracion = json.load(config_file)
+                   
+                  nombre_original = configuracion.get("nombre_original", "")
+                  
+                  print(f"nombre original: {nombre_original}")
                   descifrador = Descifrar()
                   descifrador.descifrar(evaluaciones, criptograma, nombre_original)
-                  print("DESCIFRADO EXITOSO.\n")
+                  print("\nDESCIFRADO EXITOSO.\n")
             else:
                   menu()
                   modalidad = input()

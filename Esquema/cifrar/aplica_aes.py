@@ -36,5 +36,5 @@ def aplicamos_aes(name_to_save, texto, clave):#la calve que recbimos es la calve
 def remove_texto_original(texto):
     ruta_archivo = "Textoclaro/" + texto
     os.remove(ruta_archivo)
-    print(f"Libre de evidencia: el archivo {ruta_archivo} fue eliminado.\nPara recuperarlo ingrese la opción de descifrar.\n")
+    print(f"\nLibre de evidencia: el archivo {ruta_archivo} fue eliminado.\nPara recuperarlo ingrese la opción de descifrar.\n")
  
