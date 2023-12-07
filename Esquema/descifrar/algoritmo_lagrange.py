@@ -7,7 +7,7 @@ def lagrange_finite_field(prime, puntos, x):
             if j != i:
                 numerator = (x - puntos[j][0]) % prime
                 denominator = (puntos[i][0] - puntos[j][0]) % prime
-
+                print(f"x_i:{puntos[i][0]}, x_j: {puntos[j][0]}")
                 if denominator == 0:
                     raise ValueError("Denominador es cero")
 
