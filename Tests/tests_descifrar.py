@@ -1,8 +1,6 @@
 import unittest
-import random
-from Esquema.descifrar import get_k
-from Esquema.cifrar import algoritmo_horner, obtener_coeficientes_aleatorios
 
+from Esquema.descifrar.get_k import get_k
 
 primo = 208351617316091241234326746312124448251235562226470491514186331217050270460481
 
@@ -11,7 +9,7 @@ primo = 208351617316091241234326746312124448251235562226470491514186331217050270
 listaEval = [(1, 1561), (2, 2162), (3, 2803), (4, 3484), (5, 4205)]
 
 
-class Testdescifra(unittest.TestCase):
+class TestDescifra(unittest.TestCase):
     '''
         La clase descifra tiene el objetivo de devolver un archivo con
         el texto original, apartir del archivo con extensión .aes y del 
@@ -40,31 +38,7 @@ class Testdescifra(unittest.TestCase):
         k = get_k(listaEval) #en el metodo get_k se aplica el algoritmo de lagrange
         self.assertEqual(k, 1000, f"La k como termino independiente y la obtenida con el algoritmo de lagrange no coinciden.")
     
-    def test_lagrange_denominador_no_cero(self):
-        '''
-            Verifica que en el .frg no haya parejas ordenadas repetidas.Ya que esto causara conflicto
-            al momento de usar el algoritmo de lagrange para obtener k de vuelta.
-            
-        '''
-        n = 50
-        t = 30
-        k = 100
-        
-        entrada_x = set()
-        coeficientes = obtener_coeficientes_aleatorios(t, k)
-        
-        lista_eval=[]
-        numeros_unicos = random.sample(range(1, 5000+1), n)
-       
-        for x in numeros_unicos:
-            y = algoritmo_horner(x, coeficientes)
-            lista_eval.append((x, y)) 
-        
-        for tupla in lista_eval:
-            primera_entrada = tupla[0]
-            if x in primera_entrada:
-                return False
-            return True
     
-    if __name__ == '__main__':
-        unittest.main()
+    
+if __name__ == '__main__':
+    unittest.main()

@@ -1,9 +1,12 @@
 import unittest
 import os
 import random
-from Esquema.cifrar import Cifrar
-from Esquema.cifrar.algoritmo_horner import algoritmo_horner
-from Esquema.cifrar.obtener_coeficientes_aleatorios import obtener_coeficientes_aleatorios
+
+# Importa las funciones y clases necesarias desde los módulos correspondientes
+from ..Esquema.cifrar.cifrar import Cifrar
+from ..Esquema.cifrar.algoritmo_horner import algoritmo_horner
+from ..Esquema.cifrar.obtener_coeficientes_aleatorios import obtener_coeficientes_aleatorios
+from ..Esquema.cifrar.obtener_evaluaciones import obtener_eval
 
 def contar_lineas(nombre_eval):
     with open(nombre_eval, 'r') as archivo:
@@ -99,8 +102,44 @@ class TestCifrar(unittest.TestCase):
         t = 3
         k = 3
         coeficientes = obtener_coeficientes_aleatorios(t, k)
-        self.assertEqual(k, coeficientes[-1], f"k no es el termino independeiente del polinomio.")
-    
-    if __name__ == '__main__':
-        unittest.main()
+        self.assertEqual(k, coeficientes[-1], f"k no es el termino independeiente del polinomio.") 
         
+    def obtener_evaluaciones_unicos(self):
+        '''
+            Verifica que en el .frg no se escriban parejas ordenadas repetidas. Ya que esto causara conflicto
+            al momento de usar el algoritmo de lagrange para obtener k de vuelta.
+            
+        '''
+        n = 50
+        t = 30
+        k = 100
+        
+        coeficientes = obtener_coeficientes_aleatorios(t, k)
+        
+        #genera el .frg
+        obtener_eval(n, coeficientes, 'eval_test') 
+            
+        #leemos del .frg creado anteriormente
+        lista_eval = []
+        texto_eval = "Eval/eval_test.frg"
+        with open(texto_eval, 'r') as evaluaciones:
+            for linea in evaluaciones:
+                punto = linea.strip()
+                componentes = punto.split(',')
+                tupla = tuple(int(valor.strip('() ')) for valor in componentes)
+                lista_eval.append(tupla) 
+                
+        #checamos que no haya x repetidas en las tuplas del .frg
+        entradas_x = set()
+        ans = True
+        
+        for tupla in lista_eval:
+            primera_entrada = tupla[0]
+            if primera_entrada in entradas_x:
+                ans = False
+            entradas_x.add(primera_entrada)
+       
+        self.assertTrue(ans, "El .frg tiene al menos dos evaluaciones con la misma x.")
+
+if __name__ == '__main__':
+    unittest.main()
