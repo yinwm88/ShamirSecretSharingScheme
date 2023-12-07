@@ -5,18 +5,15 @@ import json
 
 def checar_argumento_cifrar(argumentos):
     if len(argumentos) == 5:
-         if isinstance(argumentos[2], int) and isinstance(argumentos[3], int):   
             n = int(argumentos[2])
+            t = int(argumentos[3])
             if n>2:
-                  t = int(argumentos[3])
                   if t <= n:
                          return True
                   else:
                           print("El mínimo de personas para descifrar el texto excede al número de integrantes de la junta.")
             else:
                   print("Se requiere que la junta tenga minimo 3 integrantes.")
-         else:
-               print("Asegurese de que el tercer y cuarto argumento son enteros.") 
     else:
         print("No se cuentan con los argumentos necesarios para cifrar.") 
     

@@ -13,6 +13,14 @@ def obtener_eval(n, coeficientes, name_file_save):
         os.makedirs("Eval")
     name = name_file_save + ".frg"
     archivo_frg = os.path.join("Eval", name)
-    with open(archivo_frg, 'w') as evaluaciones:
-        for evaluacion in listaEval:
-            evaluaciones.write(f"{evaluacion}\n")    
+    
+    try:
+        with open(archivo_frg, 'w') as evaluaciones:
+            for evaluacion in listaEval:
+                 evaluaciones.write(f"{evaluacion}\n")  
+                 
+    except FileNotFoundError as e:
+        print(f"Error: {e}")
+            
+    
+     

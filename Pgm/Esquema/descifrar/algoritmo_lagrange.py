@@ -5,17 +5,17 @@ def lagrange_finite_field(prime, puntos, x):
 
         for j in range(len(puntos)):
             if j != i:
-                numerator = (x - puntos[j][0]) % prime
-                denominator = (puntos[i][0] - puntos[j][0]) % prime
-                #print(f"x_i:{puntos[i][0]}, x_j: {puntos[j][0]}")
-                if denominator == 0:
+                numerador = (x - puntos[j][0]) % prime
+                denominador = (puntos[i][0] - puntos[j][0]) % prime
+                
+                if denominador == 0:
                     raise ValueError("Denominador es cero")
 
-                inverse_denominator = pow(denominator, -1, prime)
+                inverso_denominador = pow(denominador, -1, prime)
 
-                term = (term * numerator * inverse_denominator) % prime
+                term = (term * numerador * inverso_denominador) % prime
 
         ans = (ans + term) % prime
 
-    return ans  # debería ser k con x = 0
+    return ans  
 
