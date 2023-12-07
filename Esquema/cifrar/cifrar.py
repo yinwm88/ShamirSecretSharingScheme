@@ -1,5 +1,4 @@
 from .obtener_evaluaciones import obtener_eval
-from ..derivar_clave import set_salt
 from .aplica_aes import aplicamos_aes,remove_texto_original
 from .obtener_coeficientes_aleatorios import obtener_coeficientes_aleatorio
 import hashlib

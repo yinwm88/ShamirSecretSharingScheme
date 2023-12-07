@@ -72,6 +72,7 @@ def llamar_modalidad(modalidad):
                   t = int(argumentos[3])
                   nombre_texto_claro = argumentos[4] 
                   
+                  #en de vez de set_name
                   nombre = os.path.splitext(nombre_texto_claro)[0]
                   with open("configuracion.json", "w") as config_file:
                         json.dump({"nombre_original": nombre}, config_file)
@@ -82,6 +83,7 @@ def llamar_modalidad(modalidad):
                   cifrador.cifrar(nombre_guardar_eval, texto_claro, n, t)
                   print("CIFRADO EXITOSO.\n")
             else:
+                  #no argumentos validos spara cifrar
                   menu()
                   modalidad=input()
                   llamar_modalidad(modalidad)
@@ -94,6 +96,7 @@ def llamar_modalidad(modalidad):
                   evaluaciones = archivo_con_extension(nombre_eval, ".frg")
                   criptograma = archivo_con_extension(nombre_aes, ".aes")
             
+                  #get name
                   with open("configuracion.json", "r") as config_file:
                         configuracion = json.load(config_file)
                    
