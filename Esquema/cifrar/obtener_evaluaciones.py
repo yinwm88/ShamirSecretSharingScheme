@@ -4,7 +4,7 @@ from .algoritmo_horner import algoritmo_horner
 
 def obtener_eval(n, coeficientes, name_file_save):
     listaEval=[]
-    numeros_unicos = random.sample(range(1, 100+1), n)
+    numeros_unicos = random.sample(range(1, 10000+1), n)
     for x in numeros_unicos:
         y = algoritmo_horner(x, coeficientes)
         listaEval.append((x, y)) 
