@@ -5,7 +5,7 @@ from cryptography.hazmat.backends import default_backend
 
 
 def leer_texto(texto):
-    path = "../Textoclaro/" + texto
+    path = "Textoclaro/" + texto
     with open(path, 'r') as archivo:
         return archivo.read()
 
@@ -31,10 +31,10 @@ def aplicamos_aes(name_to_save, texto, clave):#la calve que recbimos es la calve
     texto_claro = leer_texto(texto);
     texto_cifrado = aes(texto_claro, clave)
     nombre = name_to_save
-    escribir_aes(nombre, texto_cifrado, '../Criptograma')
+    escribir_aes(nombre, texto_cifrado, 'Criptograma')
 
 def remove_texto_original(texto):
-    ruta_archivo = "../Textoclaro/" + texto
+    ruta_archivo = "Textoclaro/" + texto
     os.remove(ruta_archivo)
     print(f"\nLibre de evidencia: el archivo {ruta_archivo} fue eliminado.\nPara recuperarlo ingrese la opción de descifrar.\n")
  

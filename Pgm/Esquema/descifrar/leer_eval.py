@@ -1,6 +1,6 @@
 def leer_eval(texto):
     listaEval = []
-    texto_eval = "../Eval/" + texto
+    texto_eval = "Eval/" + texto
     with open(texto_eval, 'r') as evaluaciones:
         for linea in evaluaciones:
             punto = linea.strip()

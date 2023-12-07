@@ -9,10 +9,10 @@ def obtener_eval(n, coeficientes, name_file_save):
         y = algoritmo_horner(x, coeficientes)
         listaEval.append((x, y)) 
         
-    if not os.path.exists("../Eval"):
-        os.makedirs("../Eval")
+    if not os.path.exists("Eval"):
+        os.makedirs("Eval")
     name = name_file_save + ".frg"
-    archivo_frg = os.path.join("../Eval", name)
+    archivo_frg = os.path.join("Eval", name)
     with open(archivo_frg, 'w') as evaluaciones:
         for evaluacion in listaEval:
             evaluaciones.write(f"{evaluacion}\n")    

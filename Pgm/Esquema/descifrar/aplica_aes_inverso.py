@@ -4,7 +4,7 @@ import os
 #from ..derivar_clave import derivar_clave
 
 def leer_criptograma(texto):
-    path = "../Criptograma/" + texto
+    path = "Criptograma/" + texto
     with open(path, 'rb') as archivo:
         return archivo.read()
 
@@ -28,5 +28,5 @@ def aplicamos_aes_inverso(nombre_original, texto_aes, clave):
     texto_aes = leer_criptograma(texto_aes)
     texto_desc = aes_inverso(clave, texto_aes)
     nombre = nombre_original
-    escribir_texto(nombre, texto_desc, "../Textoclaro")
+    escribir_texto(nombre, texto_desc, "Textoclaro")
  
