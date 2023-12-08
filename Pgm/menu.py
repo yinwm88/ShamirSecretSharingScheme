@@ -6,10 +6,14 @@ import json
 def checar_argumento_cifrar(argumentos):
     if len(argumentos) == 5:
             n = int(argumentos[2])
-            t = int(argumentos[3])
             if n>2:
+                  t = int(argumentos[3])
                   if t <= n:
-                         return True
+                        txt_file = archivo_con_extension(argumentos[4], '.txt')
+                        if(existe_archivo(txt_file, "../Textoclaro")):
+                              return True
+                        else:
+                               print("Verifique que el archivo  a cifrar existe en la carpeta Textoclaro.")
                   else:
                           print("El mínimo de personas para descifrar el texto excede al número de integrantes de la junta.")
             else:
@@ -20,21 +24,20 @@ def checar_argumento_cifrar(argumentos):
     return False
                    
             
-def existen_archivos(eval_file, aes_file):
+def existe_archivo(file, ruta):
     directorio_script = os.path.dirname(os.path.abspath(__file__))
       
-    ruta_completa_eval = os.path.join(directorio_script, "../Eval", eval_file)
-    ruta_completa_aes = os.path.join(directorio_script, "../Criptograma", aes_file)
+    ruta_completa_eval = os.path.join(directorio_script, ruta, file)
 
-    existe_eval = os.path.isfile(ruta_completa_eval)
-    existe_aes = os.path.isfile(ruta_completa_aes)
-    return existe_eval and existe_aes 
+    existe = os.path.isfile(ruta_completa_eval)
+    
+    return existe
 
 def checar_argumento_descifrar(argumentos):
       if len(argumentos) == 3: 
             eval_file = archivo_con_extension(argumentos[1],'.frg')
             aes_file = archivo_con_extension(argumentos[2], '.aes')
-            if existen_archivos(eval_file, aes_file):
+            if existe_archivo(eval_file,"../Eval") and existe_archivo(aes_file, "../Criptograma"):
                   return True
             else:
                   print("Verifique que ambos archivos existan en las carpetas designadas para cada uno. ")
