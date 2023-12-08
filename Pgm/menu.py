@@ -3,8 +3,16 @@ from Esquema.cifrar.cifrar import Cifrar
 from Esquema.descifrar.descifrar import Descifrar
 import json
 
+def es_int(entrada):
+      try:
+            int(entrada)
+            return True
+      except ValueError:
+            return False
+
 def checar_argumento_cifrar(argumentos):
     if len(argumentos) == 5:
+          if(es_int(argumentos[2]) and es_int(argumentos[3])): 
             n = int(argumentos[2])
             if n>2:
                   t = int(argumentos[3])
@@ -18,11 +26,14 @@ def checar_argumento_cifrar(argumentos):
                           print("El mínimo de personas para descifrar el texto excede al número de integrantes de la junta.")
             else:
                   print("Se requiere que la junta tenga minimo 3 integrantes.")
+          else:
+                print("Asegurese de que el tercer y cuarto argumento sean numeros enteros.")  
     else:
         print("No se cuentan con los argumentos necesarios para cifrar.") 
     
     return False
-                   
+
+                
             
 def existe_archivo(file, ruta):
     directorio_script = os.path.dirname(os.path.abspath(__file__))
