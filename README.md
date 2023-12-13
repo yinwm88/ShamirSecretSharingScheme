@@ -1,2 +1,2 @@
 # ShamirSecretSharingScheme
-Algoritmo criptoggrafico
+Algoritmo criptografico
